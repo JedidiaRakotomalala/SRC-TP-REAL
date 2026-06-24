@@ -32,41 +32,62 @@
 <html>
     <head>
         <title>Changer de département</title>
+        <link rel="stylesheet" href="../design/theme-dark/style.css">
     </head>
     <body>
-    <p><a href="fiche.php?emp_no=<?= urlencode($emp_no) ?>">&larr; Retour à la fiche</a></p>
 
-    <?php if (!$employee) { ?>
-        <h1>Employé introuvable</h1>
-    <?php } else { ?>
-        <h1>Changer le département de <?= $employee['first_name'] ?> <?= $employee['last_name'] ?></h1>
 
-        <?php if ($success) { ?>
-            <p style="color:green;">Changement effectué.</p>
-        <?php } ?>
-        <?php if ($error !== '') { ?>
-            <p style="color:red;"><?= htmlspecialchars($error) ?></p>
-        <?php } ?>
+        <nav class="navbar">
+            <ul>
+                <li class="brand">Employés DB</li>
+                <li><a href="index.php" class="active">Départements</a></li>
+                <li><a href="search.php">Rechercher un employé</a></li>
+                <li><a href="dept_form.php">➕ Ajouter un département</a></li>
+                <li><a href="emp_form.php">➕ Ajouter un employé</a></li>
+                <li><a href="stats.php">Statistiques</a></li>
+            </ul>
+        </nav>
+    
 
-        <!-- b. Département actuel affiché en haut, avec sa date de début -->
-        <p>
-            <strong>Département actuel :</strong>
-            <?= $current ? $current['dept_name'] . ' (depuis le ' . $current['from_date'] . ')' : 'aucun' ?>
-        </p>
-
-        <form method="post" action="change_dept.php?emp_no=<?= urlencode($emp_no) ?>">
-            <p>
-                Nouveau département :
-                <select name="dept_no">
-                    <option value="">— Choisir —</option>
-                    <?php foreach ($departments as $d) { ?>
-                        <option value="<?= $d['dept_no'] ?>"><?= $d['dept_name'] ?></option>
-                    <?php } ?>
-                </select>
-            </p>
-            <p>Date de début : <input type="date" name="from_date"></p>
-            <p><input type="submit" value="Changer de département"></p>
-        </form>
-    <?php } ?>
+    <div class="container">
+        <h2 class="mt">Formulaire</h2>
+        <div class="card">
+            <?php if (!$employee) { ?>
+                <h1>Employé introuvable</h1>
+            <?php } else { ?>
+                <h1>Changer le département de <?= $employee['first_name'] ?> <?= $employee['last_name'] ?></h1>
+                <?php if ($success) { ?>
+                    <p style="color:green;">Changement effectué.</p>
+                <?php } ?>
+                <?php if ($error !== '') { ?>
+                    <p style="color:red;"><?= htmlspecialchars($error) ?></p>
+                <?php } ?>
+                <!-- b. Département actuel affiché en haut, avec sa date de début -->
+                <p>
+                    <strong>Département actuel :</strong>
+                    <?= $current ? $current['dept_name'] . ' (depuis le ' . $current['from_date'] . ')' : 'aucun' ?>
+                </p>
+                <form method="post" action="change_dept.php?emp_no=<?= urlencode($emp_no) ?>">
+                
+                    <div class="form-group">
+                        <label for="dept_name">Nouveau département :</label>
+                        <input class="form-control" type="text" id="dept_name" name="dept_name">
+                            
+                        <div class="form-group">
+                        <select class="form-control" name="dept_no">
+                            <option value="">— Choisir —</option>
+                            <?php foreach ($departments as $d) { ?>
+                            <option value="<?= $d['dept_no'] ?>"><?= $d['dept_name'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="from_date">Date de début :</label>
+                        <input class="form-control" type="date" id="from_date" name="from_date">
+                    </div>
+                    <p><input type="submit" class="btn" value="Changer de département"></p>
+                </form>
+            <?php } ?>
+        </div>
     </body>
 </html>

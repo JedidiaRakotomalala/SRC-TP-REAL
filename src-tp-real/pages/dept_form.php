@@ -36,28 +36,50 @@
 <html>
     <head>
         <title><?= $editing ? "Modifier" : "Ajouter" ?> un département</title>
+        <link rel="stylesheet" href="../design/theme-dark/style.css">
     </head>
     <body>
-    <p><a href="index.php">&larr; Retour aux départements</a></p>
-    <h1><?= $editing ? "Modifier le département $dept_no" : "Ajouter un département" ?></h1>
 
-    <?php if ($success) { ?>
-        <p style="color:green;">Enregistré.</p>
-    <?php } ?>
-    <?php if ($error !== '') { ?>
-        <p style="color:red;"><?= htmlspecialchars($error) ?></p>
-    <?php } ?>
 
-    <form method="post" action="dept_form.php<?= $editing ? '?dept_no=' . urlencode($dept_no) : '' ?>">
-        <input type="hidden" name="mode" value="<?= $editing ? 'edit' : 'add' ?>">
-        <p>
-            Numéro (4 car. max) :
-            <input type="text" name="dept_no" maxlength="4"
-                   value="<?= htmlspecialchars($dept_no) ?>"
-                   <?= $editing ? 'readonly' : '' ?>>
-        </p>
-        <p>Nom : <input type="text" name="dept_name" value="<?= htmlspecialchars($dept_name) ?>"></p>
-        <p><input type="submit" value="<?= $editing ? 'Modifier' : 'Ajouter' ?>"></p>
-    </form>
+        <nav class="navbar">
+            <ul>
+                <li class="brand">Employés DB</li>
+                <li><a href="index.php" class="active">Départements</a></li>
+                <li><a href="search.php">Rechercher un employé</a></li>
+                <li><a href="dept_form.php">➕ Ajouter un département</a></li>
+                <li><a href="emp_form.php">➕ Ajouter un employé</a></li>
+                <li><a href="stats.php">Statistiques</a></li>
+            </ul>
+        </nav>
+    
+
+        <div class="container">
+            <h1 class="mt"><?= $editing ? "Modifier le département $dept_no" : "Ajouter un département" ?></h1>
+            <hr>
+
+            <?php if ($success) { ?>
+                <p style="color:green;">Enregistré.</p>
+            <?php } ?>
+            <?php if ($error !== '') { ?>
+                <p style="color:red;"><?= htmlspecialchars($error) ?></p>
+            <?php } ?>
+        <br>
+        <br>
+        <div class="card ">
+            <form method="post" action="dept_form.php<?= $editing ? '?dept_no=' . urlencode($dept_no) : '' ?>">
+                <input type="hidden" name="mode" value="<?= $editing ? 'edit' : 'add' ?>">
+                <div class="form-group">
+                    <label for="dept_no">Numéro (4 car. max) :</label>
+                    <input class="form-control" type="text" name="dept_no" maxlength="4"
+                           value="<?= htmlspecialchars($dept_no) ?>"
+                           <?= $editing ? 'readonly' : '' ?>>
+                </div>
+                    <div class="form-group">
+                    <label for="dept_name">Nom : </label>
+                    <input class="form-control" type="text" name="dept_name" value="<?= htmlspecialchars($dept_name) ?>"></p>
+                </div>
+                <input type="submit" class="btn" value="<?= $editing ? 'Modifier' : 'Ajouter' ?>"></p>
+            </form>
+        </div>
     </body>
 </html>

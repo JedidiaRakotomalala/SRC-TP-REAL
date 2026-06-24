@@ -54,7 +54,6 @@
     
 
         <div class="container">
-        <a href="index.php" class="btn btn-secondary">&larr; Retour aux départements</a>
             <h1 class="mt"><?= $editing ? "Modifier le département $dept_no" : "Ajouter un département" ?></h1>
             <hr>
 

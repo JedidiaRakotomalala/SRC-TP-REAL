@@ -23,45 +23,80 @@
 ?>
 <html>
     <head>
-        <title>Employés du département</title>
+        <meta charset="utf-8">
+        <title>Les employees dans cette departement </title>
+        <link rel="stylesheet" href="../design/theme-dark/style.css">
     </head>
     <body>
-    <p><a href="index.php">&larr; Retour aux départements</a></p>
 
-    <?php if (!$department) { ?>
-        <h1>Département introuvable</h1>
-    <?php } else { ?>
-        <h1>Employés du département <?= $department['dept_name'] ?> (<?= $department['dept_no'] ?>)</h1>
-        <table border="1">
-            <tr>
-                <th>N°</th>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Genre</th>
-                <th>Date d'embauche</th>
-            </tr>
-            <?php foreach ($employees as $emp) { ?>
-                <tr>
-                    <td><a href="fiche.php?emp_no=<?= urlencode($emp['emp_no']) ?>"><?= $emp['emp_no'] ?></a></td>
-                    <td><?= $emp['first_name'] ?></td>
-                    <td><?= $emp['last_name'] ?></td>
-                    <td><?= $emp['gender'] ?></td>
-                    <td><?= $emp['hire_date'] ?></td>
-                </tr>
-            <?php } ?>
-        </table>
-        <p>
-            <?php if ($page > 1) { ?>
-                <a href="employees.php?dept_no=<?= urlencode($dept_no) ?>&page=<?= $page - 1 ?>">&larr; Précédent</a>
-            <?php } ?>
 
-            Page <?= $page ?> / <?= $nb_pages ?>
+        <nav class="navbar">
+            <ul>
+                <li class="brand">Employés DB</li>
+                <li><a href="index.php" class="active">Départements</a></li>
+                <li><a href="search.php">Rechercher un employé</a></li>
+                <li><a href="dept_form.php">➕ Ajouter un département</a></li>
+                <li><a href="emp_form.php">➕ Ajouter un employé</a></li>
+                <li><a href="stats.php">Statistiques</a></li>
+            </ul>
+        </nav>
+    
 
-            <?php if ($page < $nb_pages) { ?>
-                <a href="employees.php?dept_no=<?= urlencode($dept_no) ?>&page=<?= $page + 1 ?>">Suivant &rarr;</a>
-            <?php } ?>
-        </p>
-        <p><?= $total ?> employé(s) au total dans ce département.</p>
-    <?php } ?>
+    <div class="container">
+
+
+        <?php if (!$department) { ?>
+            <div class="alert alert-error">Departement introuvable .</div>
+        <?php } else { ?>
+            <h1>Employés du département <?= $department['dept_name'] ?> (<?= $department['dept_no'] ?>)</h1>
+            <hr>
+            <br>
+            <br>
+
+            <table class="table">
+                <thead>
+                    <th>N°</th>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Genre</th>
+                    <th>Date d'embauche</th>
+                </thead>
+                <tbody>
+                    <?php foreach ($employees as $emp) { ?>
+                        <tr>
+                            <td><a href="fiche.php?emp_no=<?= urlencode($emp['emp_no']) ?>"><?= $emp['emp_no'] ?></a></td>
+                            <td><?= $emp['first_name'] ?></td>
+                            <td><?= $emp['last_name'] ?></td>
+                            <td><?= $emp['gender'] ?></td>
+                            <td><?= $emp['hire_date'] ?></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+
+            <div class="pagination">
+                <?php if ($page > 1) { ?>
+                    <a href="employees.php?dept_no=<?= urlencode($dept_no) ?>&page=<?= $page - 1 ?>">&larr; Précédent</a>
+                <?php } ?>
+                <span class="current">Page <?= $page ?> / <?= $nb_pages ?></span>
+                <?php if ($page < $nb_pages) { ?>
+                    <a href="employees.php?dept_no=<?= urlencode($dept_no) ?>&page=<?= $page + 1 ?>">Suivant &rarr;</a>
+                <?php } ?>
+            </div>
+            <br>
+            <h3><?= $total ?> employé(s) au total dans ce département.</h3>
+
+        <?php } ?>
+
+        <br>
+        <br>
+        <a href="../../" class="btn btn-secondary"><- Quiter</a>
+        <br>
+        <br>
+
+
+    </div>
+
+
     </body>
 </html>

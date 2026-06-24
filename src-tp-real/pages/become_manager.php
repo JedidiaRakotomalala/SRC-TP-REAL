@@ -28,11 +28,13 @@
 ?>
 <html>
     <head>
-        <title>Devenir manager</title>
+        <meta charset="utf-8">
+        <title>Devenir manager </title>
         <link rel="stylesheet" href="../design/theme-dark/style.css">
     </head>
     <body>
-    
+
+
         <nav class="navbar">
             <ul>
                 <li class="brand">Employés DB</li>
@@ -43,10 +45,13 @@
                 <li><a href="stats.php">Statistiques</a></li>
             </ul>
         </nav>
-
+    
 
     <div class="container">
-        <p><a href="fiche.php?emp_no=<?= urlencode($emp_no) ?>" class="btn">&larr; Retour à la fiche</a></p>
+
+
+
+        <p><a href="fiche.php?emp_no=<?= urlencode($emp_no) ?>">&larr; Retour à la fiche</a></p>
 
         <?php if (!$employee) { ?>
             <h1>Employé introuvable</h1>
@@ -57,29 +62,46 @@
 
             <?php if ($success) { ?>
                 <p style="color:green;">C'est fait : l'employé est désormais le manager du département.
-                   <a href="index.php">Vérifier dans la liste des départements &rarr;</a></p>
+                <a href="index.php">Vérifier dans la liste des départements &rarr;</a></p>
             <?php } ?>
             <?php if ($error !== '') { ?>
                 <p style="color:red;"><?= htmlspecialchars($error) ?></p>
             <?php } ?>
 
+            <hr>
+            <br>
+
+
             <h2 class="mt">Formulaire</h2>
             <div class="card">
-                <p><strong>Manager en cours :</strong>
-                    <?= $manager ? $manager['manager_name'] . ' (depuis le ' . $manager['from_date'] . ')' : 'aucun' ?>
-                <!-- b. Manager en cours affiché en haut -->
-                </p>
-
-                <form method="post" action="become_manager.php?emp_no=<?= urlencode($emp_no) ?>">
+                <form action="#" method="post">
                     <div class="form-group">
-                        <label for="from_date">Date de début</label>
-                        <input class="form-control" type="date" id="from_date" name="from_date">
+                        <label for="first_name">Manager en cours :</label>
+                        <input class="form-control" type="text" id="first_name" value="<?= $manager ? $manager['manager_name'] . ' (depuis le ' . $manager['from_date'] . ')' : 'aucun' ?>" name="frst_name" readonly >
                     </div>
-                    <input type="submit" class="btn" value="Devenir manager">
+                    <div class="form-group">
+                        <label for="hire_date">Date de début : </label>
+                        <input class="form-control" type="date" id="hire_date" name="from_date">
+                    </div>
+                    <br>
+                    <button type="submit" class="btn">Enregistrer</button>
                 </form>
             </div>
+
+            <br>
+            <hr>
+            <br>
+
+
+
         <?php } ?>
-        </div>
+
+        <br>
+        <br>
+        <a href="../../" class="btn btn-secondary"><- Quiter</a>
+        <br>
+
+    </div>
 
     </body>
 </html>

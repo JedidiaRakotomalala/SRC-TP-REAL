@@ -31,7 +31,8 @@
 ?>
 <html>
     <head>
-        <title>Changer de département</title>
+        <meta charset="utf-8">
+        <title>Changer de departement</title>
         <link rel="stylesheet" href="../design/theme-dark/style.css">
     </head>
     <body>
@@ -47,47 +48,72 @@
                 <li><a href="stats.php">Statistiques</a></li>
             </ul>
         </nav>
-    
 
-    <div class="container">
-        <h2 class="mt">Formulaire</h2>
-        <div class="card">
+
+        <div class="container">
+
+
+
             <?php if (!$employee) { ?>
-                <h1>Employé introuvable</h1>
+                <h1 class="alert alert-error" >Employé introuvable</h1>
             <?php } else { ?>
                 <h1>Changer le département de <?= $employee['first_name'] ?> <?= $employee['last_name'] ?></h1>
+
+                <hr>
+                <br>
+
                 <?php if ($success) { ?>
                     <p style="color:green;">Changement effectué.</p>
                 <?php } ?>
                 <?php if ($error !== '') { ?>
                     <p style="color:red;"><?= htmlspecialchars($error) ?></p>
                 <?php } ?>
-                <!-- b. Département actuel affiché en haut, avec sa date de début -->
-                <p>
-                    <strong>Département actuel :</strong>
-                    <?= $current ? $current['dept_name'] . ' (depuis le ' . $current['from_date'] . ')' : 'aucun' ?>
-                </p>
-                <form method="post" action="change_dept.php?emp_no=<?= urlencode($emp_no) ?>">
-                
-                    <div class="form-group">
-                        <label for="dept_name">Nouveau département :</label>
-                        <input class="form-control" type="text" id="dept_name" name="dept_name">
-                            
+
+
+
+                <h2 class="mt">Formulaire</h2>
+                <div class="card">
+                    <form action="#" method="post">
                         <div class="form-group">
-                        <select class="form-control" name="dept_no">
-                            <option value="">— Choisir —</option>
-                            <?php foreach ($departments as $d) { ?>
-                            <option value="<?= $d['dept_no'] ?>"><?= $d['dept_name'] ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="from_date">Date de début :</label>
-                        <input class="form-control" type="date" id="from_date" name="from_date">
-                    </div>
-                    <p><input type="submit" class="btn" value="Changer de département"></p>
-                </form>
+                            <label for="first_name">Departement actuelle : </label>
+                            <input class="form-control" type="text" id="first_name" value="<?= $current ? $current['dept_name'] . ' (depuis le ' . $current['from_date'] . ')' : 'aucun' ?>" name="first_nam" readonly >
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Nouveau département : </label>
+                            <select class="form-control" id="gender" name="dept_no">
+                                <option value="">— Choisir —</option>
+                                <?php foreach ($departments as $d) { ?>
+                                    <option value="<?= $d['dept_no'] ?>"><?= $d['dept_name'] ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="hire_date">Date de début : </label>
+                            <input class="form-control" type="date" id="hire_date" name="from_date" >
+                        </div>
+                        <br>
+                        <button type="submit" class="btn">Enregistrer</button>
+                    </form>
+                </div>
+
+                <br>
+                <hr>
+                <br>
+
+
+
             <?php } ?>
+
+
+        <br>
+        <br>
+        <a href="../../" class="btn btn-secondary"><- Quiter</a>
+
+
+
         </div>
+
+
+
     </body>
 </html>

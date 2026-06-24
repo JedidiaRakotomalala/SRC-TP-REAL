@@ -39,6 +39,20 @@
         <link rel="stylesheet" href="../design/theme-dark/style.css">
     </head>
     <body>
+
+
+        <nav class="navbar">
+            <ul>
+                <li class="brand">Employés DB</li>
+                <li><a href="index.php" class="active">Départements</a></li>
+                <li><a href="search.php">Rechercher un employé</a></li>
+                <li><a href="dept_form.php">➕ Ajouter un département</a></li>
+                <li><a href="emp_form.php">➕ Ajouter un employé</a></li>
+                <li><a href="stats.php">Statistiques</a></li>
+            </ul>
+        </nav>
+    
+
         <div class="container">
         <a href="index.php" class="btn btn-secondary">&larr; Retour aux départements</a>
             <h1 class="mt"><?= $editing ? "Modifier le département $dept_no" : "Ajouter un département" ?></h1>

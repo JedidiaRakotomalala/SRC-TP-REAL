@@ -29,34 +29,57 @@
 <html>
     <head>
         <title>Devenir manager</title>
+        <link rel="stylesheet" href="../design/theme-dark/style.css">
     </head>
     <body>
-    <p><a href="fiche.php?emp_no=<?= urlencode($emp_no) ?>">&larr; Retour à la fiche</a></p>
+    
+        <nav class="navbar">
+            <ul>
+                <li class="brand">Employés DB</li>
+                <li><a href="index.php" class="active">Départements</a></li>
+                <li><a href="search.php">Rechercher un employé</a></li>
+                <li><a href="dept_form.php">➕ Ajouter un département</a></li>
+                <li><a href="emp_form.php">➕ Ajouter un employé</a></li>
+                <li><a href="stats.php">Statistiques</a></li>
+            </ul>
+        </nav>
 
-    <?php if (!$employee) { ?>
-        <h1>Employé introuvable</h1>
-    <?php } elseif (!$current_dept) { ?>
-        <h1>Cet employé n'a pas de département actuel.</h1>
-    <?php } else { ?>
-        <h1><?= $employee['first_name'] ?> <?= $employee['last_name'] ?> — devenir manager de <?= $current_dept['dept_name'] ?></h1>
 
-        <?php if ($success) { ?>
-            <p style="color:green;">C'est fait : l'employé est désormais le manager du département.
-               <a href="index.php">Vérifier dans la liste des départements &rarr;</a></p>
+    <div class="container">
+        <p><a href="fiche.php?emp_no=<?= urlencode($emp_no) ?>" class="btn">&larr; Retour à la fiche</a></p>
+
+        <?php if (!$employee) { ?>
+            <h1>Employé introuvable</h1>
+        <?php } elseif (!$current_dept) { ?>
+            <h1>Cet employé n'a pas de département actuel.</h1>
+        <?php } else { ?>
+            <h1><?= $employee['first_name'] ?> <?= $employee['last_name'] ?> — devenir manager de <?= $current_dept['dept_name'] ?></h1>
+
+            <?php if ($success) { ?>
+                <p style="color:green;">C'est fait : l'employé est désormais le manager du département.
+                   <a href="index.php">Vérifier dans la liste des départements &rarr;</a></p>
+            <?php } ?>
+            <?php if ($error !== '') { ?>
+                <p style="color:red;"><?= htmlspecialchars($error) ?></p>
+            <?php } ?>
+
+            <h2 class="mt">Formulaire</h2>
+            <div class="card">
+                <p><strong>Manager en cours :</strong>
+                    <?= $manager ? $manager['manager_name'] . ' (depuis le ' . $manager['from_date'] . ')' : 'aucun' ?>
+                <!-- b. Manager en cours affiché en haut -->
+                </p>
+
+                <form method="post" action="become_manager.php?emp_no=<?= urlencode($emp_no) ?>">
+                    <div class="form-group">
+                        <label for="from_date">Date de début</label>
+                        <input class="form-control" type="date" id="from_date" name="from_date">
+                    </div>
+                    <input type="submit" class="btn" value="Devenir manager">
+                </form>
+            </div>
         <?php } ?>
-        <?php if ($error !== '') { ?>
-            <p style="color:red;"><?= htmlspecialchars($error) ?></p>
-        <?php } ?>
+        </div>
 
-        <!-- b. Manager en cours affiché en haut -->
-        <p><strong>Manager en cours :</strong>
-            <?= $manager ? $manager['manager_name'] . ' (depuis le ' . $manager['from_date'] . ')' : 'aucun' ?>
-        </p>
-
-        <form method="post" action="become_manager.php?emp_no=<?= urlencode($emp_no) ?>">
-            <p>Date de début : <input type="date" name="from_date"></p>
-            <p><input type="submit" value="Devenir manager"></p>
-        </form>
-    <?php } ?>
     </body>
 </html>
